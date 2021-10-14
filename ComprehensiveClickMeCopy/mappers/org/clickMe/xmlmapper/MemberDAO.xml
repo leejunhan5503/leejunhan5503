@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.clickMe.Member.model.dao.MemberDAO">
+	
+	<resultMap id="userResultMap" type="org.clickMe.common.model.dto.UserDTO">
+		<id property="code" column="USER_CODE"/>
+		<result property="entCode" column="ENT_CODE"/>
+		<result property="id" column="USER_ID"/>
+		<result property="psw" column="USER_PSW"/>
+		<result property="email" column="USER_EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="name" column="USER_NAME"/>
+		<result property="date" column="BIRTH_DATE"/>
+		<result property="gender" column="GENDER"/>
+		<result property="authority" column="AUTHORITY"/>
+		<result property="deposit" column="DEPOSIT"/>
+		<result property="profileOrigName" column="PROFILE_ORIG_NAME"/>
+		<result property="profileUuidName" column="PROFILE_UUID_NAME"/>
+		<result property="profileImgPath" column="PROFILE_IMG_PATH"/>
+		<result property="lastLogin" column="LAST_LOGIN"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+	</resultMap>
+	
+	<!-- 비밀번호 -->
+	<select id="selectEncryptedPsw" resultType="java.lang.String">
+        SELECT /* com.greedy.jsp.member.model.dao.MemberDAO#selectEncryptedPwd() */
+               A.USER_PSW
+          FROM "USER" A
+         WHERE A.USER_ID = #{ id }
+	</select>
+	
+	<!-- 아이디 -->
+	<select id="selectLoginMember" resultMap="memberResultMap">
+		SELECT /* com.greedy.jsp.member.model.dao.MemberDAO#selectLoginMember() */
+			   A.USER_NO
+		     , A.USER_ID
+		     , A.USER_EMAIL
+		     , A.PHONE
+		     , A.EMAIL
+		     , A.USER_NAME
+		     , A.BIRTH_DATE
+		     , A.GENDER
+		     , A.AUTHORITY
+		     , A.DEPOSIT
+		     , A.PROFILE_ORIG_NAME
+		     , A.PROFILE_UUID_NAME
+		     , A.PROFILE_IMG_PATH
+		     , A.LAST_LOGIN
+		     , A.ENROLL_DATE
+		 FROM  "USER" A
+		  AND  A.MEMBER_ID = #{ id }
+	</select>	
+</mapper>
